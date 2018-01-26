@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/angular.js/1.6.8/angular.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>E5</title>
+    <style>
+        div.container ul li
+        {
+            float:left; /* 向左漂移，将竖排变为横排 */
+        }
+        div.container ul
+        {
+            border: 1px solid #000000;
+        }
+        div.container li
+        {
+            border: 1px solid #55a532;
+            display: inline-list-item;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="userCtrl">
+
+<div class="container">
+
+    <h3>Users</h3>
+    <ul style="height: 200px; width: 400px">
+    <li ng-repeat="user in users" style="height: 30%">
+        <span  ng-hide="user.edit['photo']"><img ng-src='{{ user.photo }}' style="max-width: 200px"/></span>
+    </li>
+    </ul>
+
+</div>
+
+<script src="js/e5Show.js"></script>
+<script src="js/e5.js"></script>
+</body>
+</html>

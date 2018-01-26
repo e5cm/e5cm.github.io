@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/angular.js/1.6.8/angular.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>E5</title>
+</head>
+<body ng-app="myApp" ng-controller="userCtrl">
+
+<div class="container">
+
+    <h3>Users</h3>
+
+    <ul class="table table-striped">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>图片</th>
+            <th>名称</th>
+            <th>类型</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in users">
+            <td>{{ $index + 1 }}
+                <div class="glyphicon glyphicon-arrow-up" ng-click="getUp($index)"></div>
+                <div class="glyphicon glyphicon-arrow-down" ng-click="getDown($index)"></div>
+            </td>
+            <td>
+                <!--ng-click="toEdit($index,'photo')"-->
+                <span  ng-hide="user.edit['photo']"><img ng-src='{{ user.photo }}' style="max-width: 200px"/></span>
+                <input type="text" id="photo_{{ $index }}" ng-model="user.photo" ng-show="user.edit['photo']" ng-blur="user.edit['photo']=false"/>
+            </td>
+            <td>
+                <span ng-click="toEdit($index,'name')" ng-hide="user.edit['name']">{{ user.name }}</span>
+                <input type="text" id="name_{{ $index }}" ng-model="user.name" ng-show="user.edit['name']" ng-blur="user.edit['name']=false"/>
+            </td>
+            <td>
+                <span ng-click="toEdit($index,'type')" ng-hide="user.edit['type']">{{ typeEnum[user.type]}}</span>
+                <select ng-model="user.type" ng-options="x as y for (x,y) in typeEnum" ng-show="user.edit['type']" ng-blur="user.edit['type']=false" id="type_{{ $index }}">
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </ul>
+    <hr>
+    <button class="btn btn-success" ng-click="download()">
+        <span class="glyphicon glyphicon-download"></span>下载
+    </button>
+    <hr>
+    <button class="btn btn-success" ng-click="editUser('new')">
+        <span class="glyphicon glyphicon-user"></span>创建新用户
+    </button>
+    <hr>
+
+    <h3 ng-show="edit">创建新用户:</h3>
+    <h3 ng-hide="edit">编辑用户:</h3>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名:</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="fName" ng-disabled="!edit" placeholder="名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">姓:</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="lName" ng-disabled="!edit" placeholder="姓">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">密码:</label>
+            <div class="col-sm-10">
+                <input type="password" ng-model="passw1" placeholder="密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">重复密码:</label>
+            <div class="col-sm-10">
+                <input type="password" ng-model="passw2" placeholder="重复密码">
+            </div>
+        </div>
+    </form>
+
+    <hr>
+    <button class="btn btn-success" ng-disabled="error || incomplete" ng-click="saveUser('new')">
+        <span class="glyphicon glyphicon-save"></span>修改
+    </button>
+
+</div>
+
+<script src="js/e5.js"></script>
+<script src="js/e5Editor.js"></script>
+<script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+</body>
+</html>
