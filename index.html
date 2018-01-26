@@ -21,14 +21,14 @@
         }
     </style>
 </head>
-<body ng-app="myApp" ng-controller="userCtrl">
+<body ng-app="songApp" ng-controller="songCtrl">
 
 <div class="container">
 
     <h3>Users</h3>
     <ul style="height: 200px; width: 400px">
-    <li ng-repeat="user in users" style="height: 30%">
-        <span  ng-hide="user.edit['photo']"><img ng-src='{{ user.photo }}' style="max-width: 200px"/></span>
+    <li ng-repeat="song in songs" style="height: 30%">
+        <span><img ng-src='e5img/{{ song.code }}.jpg' style="max-width: 200px"/></span>
     </li>
     </ul>
 
