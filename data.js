@@ -1,4 +1,10 @@
+var songData=
 [
+  {
+    "bpm": "0",
+    "e5code": "random",
+    "code": "21_000"
+  },
   {
     "bpm": "180",
     "e5code": "E~‘YE'HF ‘ -",
@@ -2120,3 +2126,4 @@
     "code": "21_424"
   }
 ]
+;

@@ -1,8 +1,6 @@
 var app = angular.module('songApp', []);
-app.controller('songCtrl', function($scope,$http) {
-    $http.get('data.json').then(function (response) {
-        $scope.songs = response.data;
-    });
+app.controller('songCtrl', function($scope) {
+    $scope.songs = songData;
     $scope.typeEnum = e5.typeEnum;
 
     $scope.download = function(id) {
