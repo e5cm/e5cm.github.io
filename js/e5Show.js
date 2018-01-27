@@ -1,11 +1,5 @@
 var app = angular.module('songApp', []);
 app.controller('songCtrl', function($scope, $timeout) {
-    $scope.load = function() {
-        alert('code here');
-    };
-    $scope.$watch('$viewContentLoaded', function() {
-        alert('1');
-    });
     $scope.songs = songData;
     $scope.slide = "mid";
     $scope.typeEnum = e5.typeEnum;
@@ -19,18 +13,8 @@ app.controller('songCtrl', function($scope, $timeout) {
         $scope.slide="next";
         $timeout(function () {
             $scope.slide="mid";
-            if($scope.showIndex > $scope.songs.length - 8){
-                $scope.showIndex = 0;
-                $scope.songsToShow=$scope.songs.slice(0,10);
-                $scope.songsToShow.unshift({},{});
-                return;
-            }
             $scope.showIndex += 2;
-            var tmp = $scope.songsToShow.concat([]);
-            tmp.push($scope.songs[$scope.showIndex+8],$scope.songs[$scope.showIndex+9]);
-            tmp.splice(0,2);
-            $scope.songsToShow = tmp;
-
+            $scope.slideTo($scope.showIndex)
         }, 200);
     };
     $scope.slidePre = function(){
@@ -38,41 +22,37 @@ app.controller('songCtrl', function($scope, $timeout) {
         $timeout(function () {
             $scope.slide="mid";
             $scope.showIndex -= 2;
-            if($scope.showIndex<0){
-                $scope.showIndex = Math.ceil($scope.songs.length/2) -2;
-                //TODO 跳转结尾
-                return;
-            }
-
-            //alert(angular.toJson($scope.songsToShow));
-            var preSongs;
-            if($scope.showIndex==0){
-                preSongs = [{},{}]
-            }else{
-                preSongs =[$scope.songs[$scope.showIndex-2],$scope.songs[$scope.showIndex-1]];
-            }
-            $scope.songsToShow.unshift(preSongs[0],preSongs[1]);
-            $scope.songsToShow.splice(12,2);
-            //alert(angular.toJson($scope.songsToShow));
-
+            $scope.slideTo($scope.showIndex)
         }, 190);
     };
     $scope.slideTo =  function(showIndex){
-        var tmp = $scope.songs.slice(showIndex,showIndex + 10);
+        //跳转结尾
+        if(showIndex<0){
+            showIndex = Math.ceil(($scope.songs.length - 8)/2)*2;
+        }
+        //跳转开头
+        if(showIndex > $scope.songs.length - 6){
+            showIndex = 0;
+        }
+        //修正
+        $scope.showIndex = showIndex;
+        var tmp;
         if(showIndex == 0){
+            tmp = $scope.songs.slice(showIndex,showIndex + 10);
             tmp.unshift({},{});
+        }else{
+            tmp = $scope.songs.slice(showIndex-2,showIndex + 10);
         }
         while(tmp.length<12){
             tmp.push({});
         }
-        tmp.push($scope.songs[$scope.showIndex+8],$scope.songs[$scope.showIndex+9]);
-        tmp.splice(0,2);
         $scope.songsToShow = tmp;
     };
 
-    $timeout(function () {
-        $scope.songsPreLoad=$scope.songs;
-    },2000);
+    //预加载
+    // $timeout(function () {
+    //     $scope.songsPreLoad=$scope.songs;
+    // },2000);
 });
 
 app.filter('typeName', function() { //可以注入依赖
