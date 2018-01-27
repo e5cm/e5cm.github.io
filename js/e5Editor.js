@@ -28,7 +28,7 @@ app.controller('songCtrl', function($scope,$http) {
         $scope.songs[index].edit[prop] = true;    //我猜你是这样写的，在这里后边加一句
         document.getElementById(prop+"_" + index).focus();
         setTimeout(function(){document.getElementById(prop+"_" + index).focus();},10);
-    }
+    };
 });
 app.filter('typeName', function() { //可以注入依赖
     return function(text) {
