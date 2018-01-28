@@ -25,7 +25,7 @@
             /*background: url("background.jpg") no-repeat center;*/
             background-size: cover;
             padding-top: 50%;
-            border: 1px solid #FF00FF;
+            /*border: 1px solid #FF00FF;*/
         }
 
         p {
@@ -34,46 +34,43 @@
             color: #fff;
         }
 
-
-
-
-
+        div.container
+        {
+            padding:0;
+            margin-top: -50%;
+            /*border: 1px solid #0000FF;*/
+            width: 100%;
+            height: 300%;
+            overflow: hidden;
+        }
+        div.container ul
+        {
+            width: 150%;
+            padding:0;
+            /*border: 1px solid #000000;*/
+            margin-left: -25%;
+        }
         /*html, body{ margin:0; height:100%; }*/
         div.container ul li
         {
 
             float:left; /* 向左漂移，将竖排变为横排 */
             height: 50%;
-            width: 16.66%
-        }
-        div.container ul
-        {
-            width: 150%;
-            padding:0;
-            border: 1px solid #000000;
-            margin-left: -25%;
-        }
-        div.container li
-        {
+            width: 16.66%;
             list-style:none;
-            border: 1px solid #55a532;
+            /*border: 1px solid #55a532;*/
+        }
 
-        }
-        div.container
-        {
-            padding:0;
-            margin-top: -50%;
-            border: 1px solid #0000FF;
-            width: 100%;
-            height: 300%;
-            overflow: hidden;
-        }
         div.img-div{
             max-width: 100%;
             padding-top: 80%;
             padding-left: 10%;
             padding-right: 10%;
-            border: 1px solid #FF0000;
+            /*border: 1px solid #FF0000;*/
+
+            background-size:40%;
+        }
+        div.img-div.not-empty{
             background: url("img/loading.gif") no-repeat center;
         }
         img.e5-img{
@@ -85,16 +82,29 @@
         {
             color:#fff;
             font-size:.9em;
-            width:4em;
-            border:1px solid  #000;
-            position:fixed;
-            background-color:#888;
-            right:20px;
-            top:300px;
-            padding:.4em;
+            width:4%;
+            padding-top:4%;
+            border:2px solid  #CCC;
+            border-radius: 20%;
+            position:absolute;
+            margin-top:19%;
             cursor:pointer;
+            background: url("img/slide.png") no-repeat center;
+            /*background: -webkit-linear-gradient(-90deg, blue, darkblue, blue); !* Safari 5.1 - 6.0 *!*/
+            /*background: -o-linear-gradient(-90deg, blue, darkblue, blue); !* Opera 11.1 - 12.0 *!*/
+            /*background: -moz-linear-gradient(-90deg, blue, darkblue, blue); !* Firefox 3.6 - 15 *!*/
+            /*background: linear-gradient(-90deg, blue, darkblue, blue); !* 标准的语法（必须放在最后） *!*/
 
         }
+        div.slide.flipx {
+            -moz-transform:scaleX(-1);
+            -webkit-transform:scaleX(-1);
+            -o-transform:scaleX(-1);
+            transform:scaleX(-1);
+            /*IE*/
+            filter:FlipH;
+        }
+
         div.slide:hover
         {
             background-color:#b20808;
@@ -130,18 +140,21 @@
 <div class="figure">
     <div class="inner">
         <div class="image-wrapper">
-            <div class="slide" ng-click="slidePre()" style="left:20px"><span>←</span></div>
-            <div class="slide" ng-click="slideNext()" style="right:20px"><span>→</span></div>
             <div class="container">
+                <div class="slide flipx" ng-click="slidePre()" style="left:3%"></div>
+                <div class="slide" ng-click="slideNext()" style="right:3%"></div>
                 <ul ng-class="slide">
-                    <li ng-repeat="song in songsToShow | switchRc">
-                        <div class="img-div"><img ng-src='e5img/{{ song.code }}.jpg' class="e5-img"/></div>
+                    <li ng-repeat="song in songsToShow">
+                        <div class="img-div" ng-class="song.code | notEmpty">
+                            <img ng-src='e5img/{{ song.code }}.jpg' class="e5-img"/>
+                        </div>
                     </li>
                 </ul>
             </div>
 
         </div>
         <p class="figcaption">Lo, the robot walks</p>
+        <input ng-model="codeFilter" ng-change="codeFilterChange()"/>
     </div>
 </div>
 <div data-ng-init="load()" ></div>
