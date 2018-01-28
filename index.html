@@ -24,7 +24,7 @@
             background: url("http://w3cplus-cdn2.u.qiniudn.com/sites/default/files/blogs/2014/1401/flexible-image.jpg") no-repeat center;
             /*background: url("background.jpg") no-repeat center;*/
             background-size: cover;
-            padding-top: 66.66%;
+            padding-top: 50%;
             border: 1px solid #FF00FF;
         }
 
@@ -43,9 +43,12 @@
         {
 
             float:left; /* 向左漂移，将竖排变为横排 */
+            height: 50%;
+            width: 16.66%
         }
         div.container ul
         {
+            width: 150%;
             padding:0;
             border: 1px solid #000000;
             margin-left: -25%;
@@ -59,7 +62,7 @@
         div.container
         {
             padding:0;
-            margin-top: -66.66%;
+            margin-top: -50%;
             border: 1px solid #0000FF;
             width: 100%;
             height: 300%;
@@ -67,7 +70,7 @@
         }
         div.img-div{
             max-width: 100%;
-            padding-top: 133.33%;
+            padding-top: 80%;
             padding-left: 10%;
             padding-right: 10%;
             border: 1px solid #FF0000;
@@ -75,7 +78,7 @@
         }
         img.e5-img{
             max-width: 100%;
-            margin-top: -170%;
+            margin-top: -100%;
         }
 
         div.slide
@@ -130,8 +133,8 @@
             <div class="slide" ng-click="slidePre()" style="left:20px"><span>←</span></div>
             <div class="slide" ng-click="slideNext()" style="right:20px"><span>→</span></div>
             <div class="container">
-                <ul style="width: 150%" ng-class="slide">
-                    <li ng-repeat="song in songsToShow | switchRc" style="height: 50%;width: 16.66%">
+                <ul ng-class="slide">
+                    <li ng-repeat="song in songsToShow | switchRc">
                         <div class="img-div"><img ng-src='e5img/{{ song.code }}.jpg' class="e5-img"/></div>
                     </li>
                 </ul>
