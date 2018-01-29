@@ -1,5 +1,5 @@
-var app = angular.module('songApp', []);
-app.controller('songCtrl', function($scope, $timeout) {
+var app = angular.module('songApp', ['ui.bootstrap']);
+app.controller('songCtrl', function($scope, $timeout, $modal) {
     $scope.switchRc = function(data) {
         return [data[0],data[2],data[4],data[6],data[8],data[10],data[1],data[3],data[5],data[7],data[9],data[11]];
     };
@@ -77,10 +77,34 @@ app.controller('songCtrl', function($scope, $timeout) {
     };
 
 
+    $scope.openModal = function(code) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modal.html',//script标签中定义的id
+            controller : 'modalCtrl',//modal对应的Controller
+            resolve : {
+                data : function() {//data作为modal的controller传入的参数
+                    return code;//用于传递数据
+                }
+            }
+        })
+    }
+
     //预加载
     // $timeout(function () {
     //     $scope.songsPreLoad=$scope.songs;
     // },2000);
+});
+
+app.controller('modalCtrl', function($scope, $modalInstance, data) {
+    $scope.data= data;
+
+    //在这里处理要进行的操作
+    $scope.ok = function() {
+        $modalInstance.close();
+    };
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    }
 });
 
 app.filter('typeName', function() {

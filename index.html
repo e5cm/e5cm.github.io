@@ -3,7 +3,7 @@
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="data.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.6.8/angular.min.js"></script>
-<script src="https://cdn.bootcss.com/angular.js/1.6.8/angular-animate.min.js"></script>
+<script src="https://cdn.bootcss.com/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
 <script src="js/e5Show.js"></script>
 <script src="js/e5.js"></script>
 <head>
@@ -146,7 +146,7 @@
                 <ul ng-class="slide">
                     <li ng-repeat="song in songsToShow">
                         <div class="img-div" ng-class="song.code | notEmpty">
-                            <img ng-src='e5img/{{ song.code }}.jpg' class="e5-img"/>
+                            <img ng-src='e5img/{{ song.code }}.jpg' class="e5-img" ng-click="openModal(song.code)"/>
                         </div>
                     </li>
                 </ul>
@@ -162,7 +162,29 @@
     <img ng-repeat="song in songsPreLoad" ng-src='e5img/{{ song.code }}.jpg'/>
 </div>
 
-
+<script type="text/ng-template" id="modal.html">
+    <div>
+        <div class="modal-header">
+            <h3 class="modal-title" align="center">
+                标题信息
+            </h3>
+        </div>
+        <div class="modal-body">
+            <div align="center">
+                模态框内容 <br>
+                {{data}}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">
+                确认
+            </button>
+            <button class="btn btn-warning" ng-click="cancel()">
+                退出
+            </button>
+        </div>
+    </div>
+</script>
 
 </body>
 
