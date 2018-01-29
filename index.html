@@ -134,6 +134,26 @@
             animation: 200ms slideNextAni;
         }
 
+        /*弹窗top*/
+        .modal-dialog{
+            padding-top:10%;
+            margin: 0 auto;
+            width:40%;
+        }
+        .modal-content{
+            min-width: 0;
+            border-radius: 10px;
+
+        }
+
+        .img-pop-div{
+
+        }
+        .img-pop{
+            width:100%;
+            border-radius: 8px 8px 0 0;
+        }
+
     </style>
 </head>
 <body ng-app="songApp" ng-controller="songCtrl">
@@ -161,19 +181,11 @@
 <div style="display: none">
     <img ng-repeat="song in songsPreLoad" ng-src='e5img/{{ song.code }}.jpg'/>
 </div>
-
+<!--弹出框-->
 <script type="text/ng-template" id="modal.html">
     <div>
-        <div class="modal-header">
-            <h3 class="modal-title" align="center">
-                标题信息
-            </h3>
-        </div>
-        <div class="modal-body">
-            <div align="center">
-                模态框内容 <br>
-                {{data}}
-            </div>
+        <div class="img-pop-div" ng-class="data | notEmpty">
+            <img ng-src='e5img/{{ data }}.jpg' class="img-pop"/>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">
