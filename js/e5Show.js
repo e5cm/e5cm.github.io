@@ -100,7 +100,7 @@ app.controller('modalCtrl', function($scope, $modalInstance, data) {
 
     //在这里处理要进行的操作
     $scope.ok = function() {
-        $modalInstance.close();
+        window.open("orpheus://song/1501606");
     };
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
