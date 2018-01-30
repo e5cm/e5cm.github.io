@@ -97,10 +97,9 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
 
 app.controller('modalCtrl', function($scope, $uibModalInstance, data) {
     $scope.song= data;
-
     //在这里处理要进行的操作
-    $scope.ok = function() {
-        window.open("orpheus://song/"+$scope.song.orpheus,"");
+    $scope.orpheus = function() {
+        window.open("orpheus://song/"+data.orpheus,"_blank");
     };
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
