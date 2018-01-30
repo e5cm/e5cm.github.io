@@ -77,13 +77,13 @@ app.controller('songCtrl', function($scope, $timeout, $modal) {
     };
 
 
-    $scope.openModal = function(code) {
+    $scope.openModal = function(song) {
         var modalInstance = $modal.open({
             templateUrl : 'modal.html',//script标签中定义的id
             controller : 'modalCtrl',//modal对应的Controller
             resolve : {
                 data : function() {//data作为modal的controller传入的参数
-                    return code;//用于传递数据
+                    return song;//用于传递数据
                 }
             }
         })
@@ -96,7 +96,7 @@ app.controller('songCtrl', function($scope, $timeout, $modal) {
 });
 
 app.controller('modalCtrl', function($scope, $modalInstance, data) {
-    $scope.data= data;
+    $scope.song= data;
 
     //在这里处理要进行的操作
     $scope.ok = function() {
