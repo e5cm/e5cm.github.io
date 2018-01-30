@@ -1,5 +1,5 @@
-var app = angular.module('songApp', ['ui.bootstrap']);
-app.controller('songCtrl', function($scope, $timeout, $modal) {
+var app = angular.module('songApp', ['ui.bootstrap','ngTouch']);
+app.controller('songCtrl', function($scope, $timeout, $uibModal) {
     $scope.switchRc = function(data) {
         return [data[0],data[2],data[4],data[6],data[8],data[10],data[1],data[3],data[5],data[7],data[9],data[11]];
     };
@@ -29,7 +29,7 @@ app.controller('songCtrl', function($scope, $timeout, $modal) {
             $scope.slide="mid";
             $scope.showIndex -= 2;
             $scope.slideTo($scope.showIndex)
-        }, 190);
+        }, 200);
     };
     $scope.slideTo =  function(showIndex){
         var filterSongs = $scope.songs.concat([]);
@@ -78,7 +78,7 @@ app.controller('songCtrl', function($scope, $timeout, $modal) {
 
 
     $scope.openModal = function(song) {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl : 'modal.html',//script标签中定义的id
             controller : 'modalCtrl',//modal对应的Controller
             resolve : {
@@ -95,15 +95,15 @@ app.controller('songCtrl', function($scope, $timeout, $modal) {
     // },2000);
 });
 
-app.controller('modalCtrl', function($scope, $modalInstance, data) {
+app.controller('modalCtrl', function($scope, $uibModalInstance, data) {
     $scope.song= data;
 
     //在这里处理要进行的操作
     $scope.ok = function() {
-        window.open("orpheus://song/1501606");
+        window.open("orpheus://song/"+$scope.song.orpheus,"");
     };
     $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     }
 });
 
@@ -119,3 +119,48 @@ app.filter('notEmpty', function() {
         }
     }
 });
+
+app.directive('swipeAble',['$swipe','$timeout',function($swipe,$timeout){
+    return {
+        restrict:'EA',
+        link:function(scope,ele,attrs,ctrl){
+            var startX,startY,locked=false;
+            $swipe.bind(ele,{
+                'start':function(coords){
+                    startX = coords.x;
+                    startY = coords.y;
+                },
+                'move':function(coords){
+
+                },
+                'end':function(coords){
+                    var delta = coords.x - startX;
+                    if(delta<-50 && !locked){
+                        $timeout(function () {
+                            scope.slide="next-page";
+                        }, 10);
+                        $timeout(function () {
+                            scope.slide="mid";
+                            scope.showIndex += 8;
+                            scope.slideTo(scope.showIndex)
+                        }, 200);
+                        console.log('trun right');
+                    }else if(delta>50 && !locked){
+                        $timeout(function () {
+                            scope.slide="pre-page";
+                        }, 10);
+                        $timeout(function () {
+                            scope.slide="mid";
+                            scope.showIndex -= 8;
+                            scope.slideTo(scope.showIndex)
+                        }, 200);
+                        console.log('trun left');
+                    }
+                },
+                'cancel':function(coords){
+                }
+            });
+        }
+    }
+}
+]);

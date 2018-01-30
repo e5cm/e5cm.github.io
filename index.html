@@ -3,6 +3,7 @@
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="data.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.6.8/angular.min.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.6.8/angular-touch.min.js"></script>
 <script src="https://cdn.bootcss.com/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
 <script src="js/e5Show.js"></script>
 <script src="js/e5.js"></script>
@@ -21,7 +22,7 @@
         }
 
         .image-wrapper {
-            background: url("http://w3cplus-cdn2.u.qiniudn.com/sites/default/files/blogs/2014/1401/flexible-image.jpg") no-repeat center;
+            background: url("http://w3cplus-cdn2.u.qiniudn.com/sites/default/files/blogs/2014/1401/flexible-image.jpg1") no-repeat center;
             /*background: url("background.jpg") no-repeat center;*/
             background-size: cover;
             padding-top: 50%;
@@ -71,7 +72,7 @@
             background-size:40%;
         }
         div.img-div.not-empty{
-            background: url("img/loading.gif") no-repeat center;
+            background: url("img/loading.gif1") no-repeat center;
         }
         img.e5-img{
             max-width: 100%;
@@ -134,6 +135,31 @@
             animation: 200ms slideNextAni;
         }
 
+        @keyframes slidePreAniPage {
+            from {
+                margin-left: -25%;
+            }
+            to {
+                margin-left: 50%;
+            }
+        }
+
+        @keyframes slideNextAniPage {
+            from {
+                margin-left: -25%;
+            }
+            to {
+                margin-left: -125%;
+            }
+        }
+
+        .pre-page{
+            animation: 200ms slidePreAniPage;
+        }
+        .next-page{
+            animation: 200ms slideNextAniPage;
+        }
+
         /*弹窗top*/
         .modal-dialog{
             padding-top:10%;
@@ -154,13 +180,24 @@
             border-radius: 8px 8px 0 0;
         }
 
+        .btn-group-lg{
+            width: 100%;
+
+        }
+        button.btn{
+            width: 50%;
+        }
+
+        .btn-group-lg>.btn{
+            border-radius: 0;
+        }
     </style>
 </head>
 <body ng-app="songApp" ng-controller="songCtrl">
 <div class="figure">
     <div class="inner">
         <div class="image-wrapper">
-            <div class="container">
+            <div class="container" swipe-able="true">
                 <div class="slide flipx" ng-click="slidePre()" style="left:3%"></div>
                 <div class="slide" ng-click="slideNext()" style="right:3%"></div>
                 <ul ng-class="slide">
@@ -187,12 +224,12 @@
         <div class="img-pop-div" ng-class="data | notEmpty">
             <img ng-src='e5img/{{ song.code }}.jpg' class="img-pop"/>
         </div>
-        <div class="modal-footer btn-group">
-            <button class="btn btn-primary" ng-click="orpheus(song.orpheus)">
-                确认
+        <div class="btn-group btn-group-lg">
+            <button class="btn-primary btn" ng-click="orpheus(song.orpheus)" style="border-bottom-left-radius:8px;">
+                网易云音乐
             </button>
-            <button class="btn btn-warning" ng-click="cancel()">
-                退出
+            <button class="btn-warning btn" ng-click="cancel()" style="border-bottom-right-radius:8px;">
+                B站脚谱视频
             </button>
         </div>
     </div>
