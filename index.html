@@ -11,6 +11,9 @@
     <meta charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
     <title>E5</title>
     <style>
+        body{
+            overflow:scroll;overflow-y:hidden;
+        }
         .figure {
             margin: .5em;
             max-width: 100%;
@@ -212,13 +215,16 @@
             </div>
 
         </div>
-        <p class="figcaption">Lo, the robot walks</p>
-        <input ng-model="codeFilter" ng-change="codeFilterChange()"/>
+        <p class="figcaption" style="margin:0 0 0 0">Lo, the robot walks</p>
+        <input ng-model="codeFilter" ng-change="codeFilterChange()" style="width: 100%"/>
     </div>
 </div>
 <div data-ng-init="load()" ></div>
 <div style="display: none">
     <img ng-repeat="song in songsPreLoad" ng-src='e5img/{{ song.code }}.jpg'/>
+</div>
+<div style="width:100%;margin: 10% auto;text-align: center">
+    <span>建议使用横屏</span>
 </div>
 <!--弹出框-->
 <script type="text/ng-template" id="modal.html">
