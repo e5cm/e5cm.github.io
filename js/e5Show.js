@@ -1,5 +1,5 @@
-var app = angular.module('songApp', []);
-app.controller('songCtrl', function($scope, $timeout) {
+var app = angular.module('songApp', ['ui.bootstrap','ngTouch']);
+app.controller('songCtrl', function($scope, $timeout, $uibModal) {
     $scope.switchRc = function(data) {
         return [data[0],data[2],data[4],data[6],data[8],data[10],data[1],data[3],data[5],data[7],data[9],data[11]];
     };
@@ -29,7 +29,7 @@ app.controller('songCtrl', function($scope, $timeout) {
             $scope.slide="mid";
             $scope.showIndex -= 2;
             $scope.slideTo($scope.showIndex)
-        }, 190);
+        }, 200);
     };
     $scope.slideTo =  function(showIndex){
         var filterSongs = $scope.songs.concat([]);
@@ -77,10 +77,33 @@ app.controller('songCtrl', function($scope, $timeout) {
     };
 
 
+    $scope.openModal = function(song) {
+        var modalInstance = $uibModal.open({
+            templateUrl : 'modal.html',//script标签中定义的id
+            controller : 'modalCtrl',//modal对应的Controller
+            resolve : {
+                data : function() {//data作为modal的controller传入的参数
+                    return song;//用于传递数据
+                }
+            }
+        })
+    }
+
     //预加载
     // $timeout(function () {
     //     $scope.songsPreLoad=$scope.songs;
     // },2000);
+});
+
+app.controller('modalCtrl', function($scope, $uibModalInstance, data) {
+    $scope.song= data;
+    //在这里处理要进行的操作
+    $scope.orpheus = function() {
+        window.open("orpheus://song/"+data.orpheus,"_blank");
+    };
+    $scope.cancel = function() {
+        $uibModalInstance.dismiss('cancel');
+    }
 });
 
 app.filter('typeName', function() {
@@ -95,3 +118,48 @@ app.filter('notEmpty', function() {
         }
     }
 });
+
+app.directive('swipeAble',['$swipe','$timeout',function($swipe,$timeout){
+    return {
+        restrict:'EA',
+        link:function(scope,ele,attrs,ctrl){
+            var startX,startY,locked=false;
+            $swipe.bind(ele,{
+                'start':function(coords){
+                    startX = coords.x;
+                    startY = coords.y;
+                },
+                'move':function(coords){
+
+                },
+                'end':function(coords){
+                    var delta = coords.x - startX;
+                    if(delta<-50 && !locked){
+                        $timeout(function () {
+                            scope.slide="next-page";
+                        }, 10);
+                        $timeout(function () {
+                            scope.slide="mid";
+                            scope.showIndex += 8;
+                            scope.slideTo(scope.showIndex)
+                        }, 200);
+                        console.log('trun right');
+                    }else if(delta>50 && !locked){
+                        $timeout(function () {
+                            scope.slide="pre-page";
+                        }, 10);
+                        $timeout(function () {
+                            scope.slide="mid";
+                            scope.showIndex -= 8;
+                            scope.slideTo(scope.showIndex)
+                        }, 200);
+                        console.log('trun left');
+                    }
+                },
+                'cancel':function(coords){
+                }
+            });
+        }
+    }
+}
+]);
