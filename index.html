@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="data.js"></script>
+<script src="https://l8650tv3.qcloud.la/weapp/songs.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.6.8/angular.min.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.6.8/angular-touch.min.js"></script>
 <script src="https://cdn.bootcss.com/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
@@ -191,10 +191,13 @@
         }
         button.btn{
             width: 50%;
-        }
 
+        }
         .btn-group-lg>.btn{
             border-radius: 0;
+        }
+        .btn-group .btn+.btn, .btn-group .btn+.btn-group, .btn-group .btn-group+.btn, .btn-group .btn-group+.btn-group {
+            margin-left: 0;
         }
     </style>
 </head>
@@ -216,7 +219,9 @@
 
         </div>
         <p class="figcaption" style="margin:0 0 0 0">Lo, the robot walks</p>
-        <input ng-model="codeFilter" ng-change="codeFilterChange()" style="width: 100%"/>
+        <select ng-model="songType" ng-options="x as y for (x,y) in typeEnum" ng-change="changeType()">
+        </select>
+        <input ng-model="codeFilter" ng-change="codeFilterChange()" style="width: 50%"/>
     </div>
 </div>
 <div data-ng-init="load()" ></div>

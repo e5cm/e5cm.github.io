@@ -1,9 +1,13 @@
 var app = angular.module('songApp', ['ui.bootstrap','ngTouch']);
 app.controller('songCtrl', function($scope, $timeout, $uibModal) {
+    $scope.songType = '21';
+    $scope.typeEnum = e5.typeEnum;
     $scope.switchRc = function(data) {
         return [data[0],data[2],data[4],data[6],data[8],data[10],data[1],data[3],data[5],data[7],data[9],data[11]];
     };
-    $scope.songs = songData;
+    $scope.songs = songData.filter(function(song){
+        return song.type==$scope.songType;
+    });
     $scope.slide = "mid";
     $scope.typeEnum = e5.typeEnum;
     $scope.showIndex=0;
@@ -13,7 +17,12 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
     $scope.songsToShow = $scope.switchRc($scope.songsToShow);
 
 
-
+    $scope.changeType = function() {
+        $scope.songs = songData.filter(function(song){
+            return song.type==$scope.songType;
+        });
+        $scope.slideTo(0);
+    };
     //TODO 统一两个方法,改为过滤器
     $scope.slideNext = function(){
         $scope.slide="next";
@@ -67,9 +76,11 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
         var result = [];
         for(var song in songs){
             song = songs[song];
-            if(song.e5code && angular.lowercase(song.e5code).indexOf(angular.lowercase(code))>-1){
+            if(song.e5_code && angular.lowercase(song.e5_code).indexOf(angular.lowercase(code))>-1){
                 result.push(song);
-            }else if(song.e5code == "random"){
+            }else if(song.name && angular.lowercase(song.name).indexOf(angular.lowercase(code))>-1){
+                result.push(song);
+            }else if(song.e5_code == "random"){
                 result.push(song);
             }
         }
