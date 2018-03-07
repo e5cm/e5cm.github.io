@@ -1,13 +1,19 @@
+
 var app = angular.module('songApp', ['ui.bootstrap','ngTouch']);
 app.controller('songCtrl', function($scope, $timeout, $uibModal) {
     $scope.songType = '21';
+    $scope.filterType = function(song){
+        return song.type==$scope.songType || song.e5_code == "random";
+    };
+    $scope.changeType = function() {
+        $scope.songs = songData.filter($scope.filterType);
+        $scope.slideTo(0);
+    };
     $scope.typeEnum = e5.typeEnum;
     $scope.switchRc = function(data) {
         return [data[0],data[2],data[4],data[6],data[8],data[10],data[1],data[3],data[5],data[7],data[9],data[11]];
     };
-    $scope.songs = songData.filter(function(song){
-        return song.type==$scope.songType || song.e5_code == "random";
-    });
+    $scope.songs = songData.filter($scope.filterType);
     $scope.slide = "mid";
     $scope.typeEnum = e5.typeEnum;
     $scope.showIndex=0;
@@ -17,12 +23,7 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
     $scope.songsToShow = $scope.switchRc($scope.songsToShow);
 
 
-    $scope.changeType = function() {
-        $scope.songs = songData.filter(function(song){
-            return song.type==$scope.songType;
-        });
-        $scope.slideTo(0);
-    };
+
     //TODO 统一两个方法,改为过滤器
     $scope.slideNext = function(){
         $scope.slide="next";
