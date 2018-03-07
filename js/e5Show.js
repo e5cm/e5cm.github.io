@@ -6,7 +6,7 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
         return [data[0],data[2],data[4],data[6],data[8],data[10],data[1],data[3],data[5],data[7],data[9],data[11]];
     };
     $scope.songs = songData.filter(function(song){
-        return song.type==$scope.songType;
+        return song.type==$scope.songType || song.e5_code == "random";
     });
     $scope.slide = "mid";
     $scope.typeEnum = e5.typeEnum;
