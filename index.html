@@ -66,6 +66,7 @@
         }
 
         div.img-div{
+            position: relative;
             max-width: 100%;
             padding-top: 60%;
             padding-left: 10%;
@@ -78,6 +79,22 @@
             background: url("img/loading.gif") no-repeat center;
             background-size:30% 30%;
         }
+        div.status-video{
+            position:absolute;
+            top: 70%;
+            right: 15%;
+            /*border: 1px solid #FFF000;*/
+            text-shadow:rgba(255, 255, 255, 0.7) 1px 0 0,rgba(255, 255, 255, 0.7) 0 1px 0,rgba(255, 255, 255, 0.7) -1px 0 0,rgba(255, 255, 255, 0.7) 0 -1px 0;
+
+            -webkit-text-shadow::rgba(255, 255, 255, 0.7) 1px 0 0,:rgba(255, 255, 255, 0.7) 0 1px 0,:rgba(255, 255, 255, 0.7) -1px 0 0,:rgba(255, 255, 255, 0.7) 0 -1px 0;
+
+            -moz-text-shadow::rgba(255, 255, 255, 0.7) 1px 0 0,:rgba(255, 255, 255, 0.7) 0 1px 0,:rgba(255, 255, 255, 0.7) -1px 0 0,:rgba(255, 255, 255, 0.7) 0 -1px 0;
+
+            *filter: Glow(color=#000, strength=1);
+        }
+        div.status-video.empty{
+            display:none;
+        }
         img.e5-img{
             max-width: 100%;
             margin-top: -80%;
@@ -85,6 +102,7 @@
 
         div.slide
         {
+            z-index: 999;
             color:#fff;
             font-size:.9em;
             width:4%;
@@ -199,6 +217,14 @@
         .btn-group .btn+.btn, .btn-group .btn+.btn-group, .btn-group .btn-group+.btn, .btn-group .btn-group+.btn-group {
             margin-left: 0;
         }
+        button.btn.empty{
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray;
+        }
     </style>
 </head>
 <body ng-app="songApp" ng-controller="songCtrl"  scoll=no>
@@ -212,7 +238,9 @@
                     <li ng-repeat="song in songsToShow">
                         <div class="img-div" ng-class="song.code | notEmpty">
                             <img ng-src='e5img/{{ song.code }}.jpg' class="e5-img" ng-click="openModal(song)"/>
+                            <div class="glyphicon glyphicon-film status-video" ng-class="song.video_url | empty" aria-hidden="true"></div>
                         </div>
+
                     </li>
                 </ul>
             </div>
@@ -241,7 +269,7 @@
             <button class="btn-primary btn" ng-click="orpheus(song.orpheus)" style="border-bottom-left-radius:8px;">
                 网易云音乐
             </button>
-            <button class="btn-warning btn" ng-click="cancel()" style="border-bottom-right-radius:8px;">
+            <button class="btn-warning btn" ng-class="song.video_url | empty" ng-click="jumpVideo()" style="border-bottom-right-radius:8px;">
                 B站脚谱视频
             </button>
         </div>
