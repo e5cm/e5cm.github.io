@@ -110,8 +110,11 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
 app.controller('modalCtrl', function($scope, $http, $uibModalInstance, data) {
     $scope.song= data;
     //在这里处理要进行的操作
-    $scope.orpheus = function() {
-        window.open("orpheus://song/"+data.orpheus,"_blank");
+    $scope.jumpMusic = function() {
+        if(data.music_url){
+            window.open(data.music_url);
+        }
+        //window.open("orpheus://song/"+data.orpheus,"_blank");
     };
     $scope.jumpVideo = function() {
         if(data.video_url){
@@ -119,11 +122,12 @@ app.controller('modalCtrl', function($scope, $http, $uibModalInstance, data) {
         }
 
     };
-    $scope.addUrl = function(type) {
+    $scope.addUrl = function() {
         var url = "https://l8650tv3.qcloud.la/weapp/songs/addUrl";
         var ajax = new ajaxClass($http,url,"POST");
+        var dataUrl = data.editType == 0?data.music_url:data.video_url
         // 传递表单数据的时候要使用$.param不然服务器没法正常捕获到发送的数据
-        ajax.data = $.param({"song_id":data.id,"type":type,"name":data.video_name,"url":data.video_url,"gmt_creator":data.editor});
+        ajax.data = $.param({"song_id":data.id,"type":data.editType,"name":data.video_name,"url":dataUrl,"gmt_creator":data.editor});
         ajax.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };            // 千万记住要传递表单数据的时候设置请求头
         ajax.successCallback = function(res){
             //成功就成功了吧,没啥好说的

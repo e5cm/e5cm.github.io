@@ -83,7 +83,7 @@
             background: url("img/loading.gif") no-repeat center;
             background-size:30% 30%;
         }
-        div.status-video{
+        div.status-url{
             position:absolute;
             top: 70%;
             right: 15%;
@@ -96,9 +96,16 @@
 
             *filter: Glow(color=#000, strength=1);
         }
-        div.status-video.empty{
+        div.status-url.video{
+            top: 70%;
+        }
+        div.status-url.music{
+            top: 50%;
+        }
+        div.status-url.empty{
             display:none;
         }
+
         img.e5-img{
             max-width: 100%;
             margin-top: -80%;
@@ -288,7 +295,8 @@
                     <li ng-repeat="song in songsToShow">
                         <div class="img-div" ng-class="song.code | notEmpty">
                             <img ng-src='e5img/{{ song.code }}.jpg' class="e5-img" ng-click="openModal(song)"/>
-                            <div class="glyphicon glyphicon-film status-video" ng-class="song.video_url | empty" aria-hidden="true"></div>
+                            <div class="glyphicon glyphicon-film status-url video" ng-class="song.video_url | empty" aria-hidden="true"></div>
+                            <div class="glyphicon glyphicon-music status-url music" ng-class="song.music_url | empty" aria-hidden="true"></div>
                         </div>
 
                     </li>
@@ -319,37 +327,52 @@
                     <p class="btn btn-default">
                         <label class="btn btn-default">大佬尊称:</label><input class="btn2 btn-default" onclick="this.focus()" type="text" ng-model="song.editor">
                     </p>
-                    <p class="btn btn-default">
+                    <p class="btn btn-default" ng-show="song.editType==1">
                         <label class="btn btn-default">视频类型:</label><input class="btn2 btn-default" type="text" ng-model="song.video_name">
                     </p>
-                    <p class="btn btn-default">
+                    <p class="btn btn-default" ng-show="song.editType==1">
                         <label class="btn btn-default">视频地址:</label><input class="btn2 btn-default" type="url" name="video_url" ng-model="song.video_url">
                     </p>
+                    <p class="btn btn-default" ng-show="song.editType==0">
+                        <label class="btn btn-default">音乐地址:</label><input class="btn2 btn-default" type="url" name="music_url" ng-model="song.music_url">
+                    </p>
                     <p class="btn btn-default">
-                        <button class="btn btn-default" ng-click="addUrl(1)" ng-disabled="!editForm.video_url.$dirty || editForm.video_url.$invalid">提交</button>
+                        <button class="btn btn-default" ng-click="addUrl()" ng-show="song.editType==1" ng-disabled="!editForm.video_url.$dirty || editForm.video_url.$invalid">提交</button>
+                        <button class="btn btn-default" ng-click="addUrl()" ng-show="song.editType==0" ng-disabled="!editForm.music_url.$dirty || editForm.music_url.$invalid">提交</button>
                         <button class="btn btn-default" ng-click="song.edit = false;">取消</button>
                     </p>
                     <p>
-                        <span style="position:relative;color:red" ng-show="editForm.video_url.$dirty && editForm.video_url.$invalid">
-                          <span ng-show="editForm.video_url.$error.required">邮箱是必须的。</span>
+                        <span style="position:relative;color:red" ng-show="song.editType==1 && editForm.video_url.$dirty && editForm.video_url.$invalid">
                           <span ng-show="editForm.video_url.$error.url">大佬别逗我,这个地址好像不太对 (°ー°〃)</span>
-                          </span>
+                        </span>
+                        <span style="position:relative;color:red" ng-show="song.editType==0 && editForm.music_url.$dirty && editForm.music_url.$invalid">
+                          <span ng-show="editForm.music_url.$error.url">大佬别逗我,这个地址好像不太对 (°ー°〃)</span>
+                        </span>
                     </p>
                 </div>
 
             </div>
         </div>
         <div class="btn-group btn-group-lg">
-            <button class="btn-primary btn" ng-click="orpheus(song.orpheus)" style="border-bottom-left-radius:8px;">
-                <label >网易云音乐</label>
+            <button class="btn-primary btn" ng-class="song.music_url | empty" ng-click="jumpMusic()" style="border-bottom-left-radius:8px;">
+                <label data-toggle="{{song.music_url|dropdown}}" aria-haspopup="true" style="width:100%;height:100%">
+                    音乐
+                </label>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" ng-click="song.edit = true;song.editType=0" data-toggle="dropdown">我要提供音乐连接</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="#">打扰了</a></li>
+                </ul>
             </button>
             <button class="btn-warning btn" ng-class="song.video_url | empty" ng-click="jumpVideo()" style="border-bottom-right-radius:8px;">
                 <label data-toggle="{{song.video_url|dropdown}}" aria-haspopup="true" style="width:100%;height:100%">
-                    B站脚谱视频
+                    视频
                 </label>
                 <ul class="dropdown-menu right">
                     <li>
-                        <a href="#" ng-click="song.edit = true;song.video_name='脚谱视频'" data-toggle="dropdown">我要提供视频连接</a>
+                        <a href="#" ng-click="song.edit = true;song.editType=1;song.video_name='脚谱视频'" data-toggle="dropdown">我要提供视频连接</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="#">打扰了</a></li>
