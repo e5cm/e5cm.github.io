@@ -113,8 +113,14 @@ app.controller('modalCtrl', function($scope, $uibModalInstance, data) {
     $scope.orpheus = function() {
         window.open("orpheus://song/"+data.orpheus,"_blank");
     };
+    $scope.jumpVideo = function() {
+        if(data.video_url){
+            window.open(data.video_url);
+        }
+
+    };
     $scope.cancel = function() {
-        $uibModalInstance.dismiss('cancel');
+
     }
 });
 
@@ -127,6 +133,14 @@ app.filter('notEmpty', function() {
     return function(text) {
         if(text){
             return "not-empty";
+        }
+    }
+});
+
+app.filter('empty', function() {
+    return function(text) {
+        if(!text){
+            return "empty";
         }
     }
 });
