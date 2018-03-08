@@ -292,7 +292,7 @@
         <div class="img-pop-div" ng-class="data | notEmpty">
             <img ng-src='e5img/{{ song.code }}.jpg' class="img-pop"/>
             <div class="edit-song" ng-show="song.edit"  ng-form="editForm">
-                <div class="btn-group-vertical" style="position:relative;top:20%;opacity:0.8">
+                <div class="btn-group-vertical" style="position:relative;top:20%;opacity:0.8;z-index: 999">
                     <p class="btn btn-default">
                         <label class="btn btn-default">大佬尊称:</label><input class="btn btn-default" type="text" ng-model="song.editor">
                     </p>
