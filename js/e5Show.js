@@ -144,6 +144,13 @@ app.filter('empty', function() {
         }
     }
 });
+app.filter('dropdown', function() {
+    return function(text) {
+        if(!text){
+            return "dropdown";
+        }
+    }
+});
 
 app.directive('swipeAble',['$swipe','$timeout',function($swipe,$timeout){
     return {
