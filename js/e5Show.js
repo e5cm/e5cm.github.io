@@ -107,7 +107,7 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
     // },2000);
 });
 
-app.controller('modalCtrl', function($scope, $uibModalInstance, data) {
+app.controller('modalCtrl', function($scope, $http, $uibModalInstance, data) {
     $scope.song= data;
     //在这里处理要进行的操作
     $scope.orpheus = function() {
@@ -118,6 +118,22 @@ app.controller('modalCtrl', function($scope, $uibModalInstance, data) {
             window.open(data.video_url);
         }
 
+    };
+    $scope.addUrl = function(type) {
+        var url = "https://l8650tv3.qcloud.la/weapp/songs/addUrl";
+        var ajax = new ajaxClass($http,url,"POST");
+        // 传递表单数据的时候要使用$.param不然服务器没法正常捕获到发送的数据
+        ajax.data = $.param({"song_id":data.id,"type":type,"name":data.video_name,"url":data.video_url,"gmt_creator":data.editor});
+        ajax.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };            // 千万记住要传递表单数据的时候设置请求头
+        ajax.successCallback = function(res){
+            //成功就成功了吧,没啥好说的
+        };
+        ajax.failureCallback = function(res){
+            //失败就失败了吧,无所谓
+        };
+        ajax.requestData();
+        alert("信息已提交,感谢大佬支持!");
+        data.edit = false;
     };
     $scope.cancel = function() {
 
@@ -196,3 +212,7 @@ app.directive('swipeAble',['$swipe','$timeout',function($swipe,$timeout){
     }
 }
 ]);
+
+var showEdit = function(){
+
+};

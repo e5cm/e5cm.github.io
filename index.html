@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/dropdown_submenu.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://l8650tv3.qcloud.la/weapp/songs.js"></script>
@@ -9,6 +10,7 @@
 <script src="https://cdn.bootcss.com/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
 <script src="js/e5Show.js"></script>
 <script src="js/e5.js"></script>
+<script src="js/ajax.js"></script>
 <head>
     <meta charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
     <title>E5</title>
@@ -34,7 +36,7 @@
             /*border: 1px solid #FF00FF;*/
         }
 
-        p {
+        p.figcaption {
             background-color: hsla(333, 50%, 60%, .8);
             padding: 0;
             color: #fff;
@@ -198,7 +200,21 @@
         }
 
         .img-pop-div{
+            position:relative;
 
+        }
+        .edit-song{
+            position:absolute;
+            /*display:none;*/
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            /*border: 1px solid #FF0000;*/
+            background: rgba(255, 255, 255, 0.4);
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 8px 8px 0 0;
         }
         .img-pop{
             width:100%;
@@ -211,7 +227,12 @@
         }
         button.btn{
             width: 50%;
-
+        }
+        .btn-group-vertical input{
+            border-radius: 0 4px 4px 0;
+        }
+        .btn-group-vertical label{
+            border-radius: 4px 0 0 4px;
         }
         .btn-group-lg>.btn{
             border-radius: 0;
@@ -226,6 +247,10 @@
             -o-filter: grayscale(100%);
             filter: grayscale(100%);
             filter: gray;
+        }
+        .dropdown-menu.right{
+            left:100%;
+            top:0;
         }
     </style>
 </head>
@@ -266,17 +291,43 @@
     <div>
         <div class="img-pop-div" ng-class="data | notEmpty">
             <img ng-src='e5img/{{ song.code }}.jpg' class="img-pop"/>
+            <div class="edit-song" ng-show="song.edit"  ng-form="editForm">
+                <div class="btn-group-vertical" style="position:relative;top:20%;opacity:0.8">
+                    <p class="btn btn-default">
+                        <label class="btn btn-default">大佬尊称:</label><input class="btn btn-default" type="text" ng-model="song.editor">
+                    </p>
+                    <p class="btn btn-default">
+                        <label class="btn btn-default">视频类型:</label><input class="btn btn-default" type="text" ng-model="song.video_name">
+                    </p>
+                    <p class="btn btn-default">
+                        <label class="btn btn-default">视频地址:</label><input class="btn btn-default" type="url" name="video_url" ng-model="song.video_url">
+                    </p>
+                    <p class="btn btn-default">
+                        <button class="btn btn-default" ng-click="addUrl(1)" ng-disabled="!editForm.video_url.$dirty || editForm.video_url.$invalid">提交</button>
+                        <button class="btn btn-default" ng-click="song.edit = false;">取消</button>
+                    </p>
+                    <p>
+                        <span style="position:relative;color:red" ng-show="editForm.video_url.$dirty && editForm.video_url.$invalid">
+                          <span ng-show="editForm.video_url.$error.required">邮箱是必须的。</span>
+                          <span ng-show="editForm.video_url.$error.url">大佬别逗我,这个地址好像不太对 (°ー°〃)</span>
+                          </span>
+                    </p>
+                </div>
+
+            </div>
         </div>
         <div class="btn-group btn-group-lg">
             <button class="btn-primary btn" ng-click="orpheus(song.orpheus)" style="border-bottom-left-radius:8px;">
                 <label >网易云音乐</label>
             </button>
             <button class="btn-warning btn" ng-class="song.video_url | empty" ng-click="jumpVideo()" style="border-bottom-right-radius:8px;">
-                <label class="" data-toggle="{{song.video_url|dropdown}}" aria-haspopup="true" style="width:100%;height:100%">
+                <label data-toggle="{{song.video_url|dropdown}}" aria-haspopup="true" style="width:100%;height:100%">
                     B站脚谱视频
                 </label>
-                <ul class="dropdown-menu">
-                    <li><a href="#">我要提供视频连接(还只是摆设)</a></li>
+                <ul class="dropdown-menu right">
+                    <li>
+                        <a href="#" ng-click="song.edit = true;song.video_name='脚谱视频'" data-toggle="dropdown">我要提供视频连接</a>
+                    </li>
                     <li class="divider"></li>
                     <li><a href="#">打扰了</a></li>
                 </ul>
