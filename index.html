@@ -261,7 +261,7 @@
             font-size: 14px;
             font-weight: 400;
             line-height: 1.42857143;
-            /*text-align: center;*/
+            text-align: center;
             /*white-space: nowrap;*/
             vertical-align: middle;
             /*-ms-touch-action: manipulation;*/
@@ -317,13 +317,13 @@
             <div class="edit-song" ng-show="song.edit"  ng-form="editForm">
                 <div class="btn-group-vertical" style="position:relative;top:20%;opacity:0.8;z-index: 999">
                     <p class="btn btn-default">
-                        <label class="btn btn-default">大佬尊称5:</label><input class="btn2 btn-default" onclick="this.focus()" type="text" ng-model="song.editor">
+                        <label class="btn btn-default">大佬尊称:</label><input class="btn2 btn-default" onclick="this.focus()" type="text" ng-model="song.editor">
                     </p>
                     <p class="btn btn-default">
-                        <label class="btn btn-default">视频类型:</label><input class="btn btn-default" type="text" ng-model="song.video_name">
+                        <label class="btn btn-default">视频类型:</label><input class="btn2 btn-default" type="text" ng-model="song.video_name">
                     </p>
                     <p class="btn btn-default">
-                        <label class="btn btn-default">视频地址:</label><input class="btn btn-default" type="url" name="video_url" ng-model="song.video_url">
+                        <label class="btn btn-default">视频地址:</label><input class="btn2 btn-default" type="url" name="video_url" ng-model="song.video_url">
                     </p>
                     <p class="btn btn-default">
                         <button class="btn btn-default" ng-click="addUrl(1)" ng-disabled="!editForm.video_url.$dirty || editForm.video_url.$invalid">提交</button>
