@@ -101,6 +101,18 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
         })
     }
 
+    $scope.swipeRight = function(){
+        $timeout(function () {
+            $scope.slide="next-page";
+        }, 10);
+        $timeout(function () {
+            $scope.slide="mid";
+            $scope.showIndex += 8;
+            $scope.slideTo($scope.showIndex)
+        }, 200);
+        console.log('turn right');
+    }
+
     //预加载
     // $timeout(function () {
     //     $scope.songsPreLoad=$scope.songs;
@@ -198,7 +210,7 @@ app.directive('swipeAble',['$swipe','$timeout',function($swipe,$timeout){
                             scope.showIndex += 8;
                             scope.slideTo(scope.showIndex)
                         }, 200);
-                        console.log('trun right');
+                        console.log('turn right');
                     }else if(delta>50 && !locked){
                         $timeout(function () {
                             scope.slide="pre-page";
@@ -208,7 +220,7 @@ app.directive('swipeAble',['$swipe','$timeout',function($swipe,$timeout){
                             scope.showIndex -= 8;
                             scope.slideTo(scope.showIndex)
                         }, 200);
-                        console.log('trun left');
+                        console.log('turn left');
                     }
                 },
                 'cancel':function(coords){
