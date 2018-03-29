@@ -2,7 +2,7 @@ var e5= {
     typeEnum : []
 };
 // e5.typeEnum["11"]="花式学习";
-// e5.typeEnum["12"]="花式表演";
+e5.typeEnum["12"]="花式表演";
 // e5.typeEnum["13"]="花式疯狂";
 // e5.typeEnum["14"]="花式双板";
 // e5.typeEnum["15"]="花式情侣";
