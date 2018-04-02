@@ -12,7 +12,7 @@
 <script src="js/e5.js"></script>
 <script src="js/ajax.js"></script>
 <head>
-    <meta charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <title>E5</title>
     <style>
         body{
@@ -305,7 +305,13 @@
 
         </div>
         <p class="figcaption" style="margin:0 0 0 0">Lo, the robot walks</p>
-        <select ng-model="songType" ng-options="x as y for (x,y) in typeEnum" ng-change="changeType()">
+        <div class="btn-group" data-toggle="buttons">
+            <label ng-repeat="types in typeEnum | filter:''" class="btn btn-default active">
+                <input type="radio" value = '{{types.id}}' name="songTypeRadio" ng-model="songType" ng-change="changeType({{types.id}})"> {{types.name}}
+            </label>
+        </div>
+
+        <select ng-model="songType" ng-options="types.id as types.name for types in typeEnum" ng-change="changeType()">
         </select>
         <input ng-model="codeFilter" ng-change="codeFilterChange()" style="width: 50%"/>
     </div>

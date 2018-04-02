@@ -5,11 +5,13 @@ app.controller('songCtrl', function($scope, $timeout, $uibModal) {
     $scope.filterType = function(song){
         return song.type==$scope.songType || song.e5_code == "random";
     };
-    $scope.changeType = function() {
+    $scope.changeType = function(type) {
+        if(type){
+            $scope.songType = type;
+        }
         $scope.songs = songData.filter($scope.filterType);
         $scope.slideTo(0);
     };
-    $scope.typeEnum = e5.typeEnum;
     $scope.switchRc = function(data) {
         return [data[0],data[2],data[4],data[6],data[8],data[10],data[1],data[3],data[5],data[7],data[9],data[11]];
     };
@@ -137,7 +139,7 @@ app.controller('modalCtrl', function($scope, $http, $uibModalInstance, data) {
     };
     $scope.addUrl = function() {
         editor=$scope.editor;
-        var url = "https://l8650tv3.qcloud.la/weapp/songs/addUrl";
+        var url = "https://740670558.e5cm.xyz/weapp/songs/addUrl";
         var ajax = new ajaxClass($http,url,"POST");
         var dataUrl = data.editType == 0?data.music_url:data.video_url
         // 传递表单数据的时候要使用$.param不然服务器没法正常捕获到发送的数据
