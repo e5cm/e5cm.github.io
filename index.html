@@ -294,7 +294,7 @@
                 <ul ng-class="slide">
                     <li ng-repeat="song in songsToShow">
                         <div class="img-div" ng-class="song.code | notEmpty">
-                            <img ng-src='e5img/{{ song.code }}.jpg' class="e5-img" ng-click="openModal(song)"/>
+                            <img ng-src='http://pcpjmjd9l.bkt.clouddn.com/{{ song.code }}.jpg' class="e5-img" ng-click="openModal(song)"/>
                             <div class="glyphicon glyphicon-film status-url video" ng-class="song.video_url | empty" aria-hidden="true"></div>
                             <div class="glyphicon glyphicon-music status-url music" ng-class="song.music_url | empty" aria-hidden="true"></div>
                         </div>
@@ -312,7 +312,7 @@
 </div>
 <div data-ng-init="load()" ></div>
 <div style="display: none">
-    <img ng-repeat="song in songsPreLoad" ng-src='e5img/{{ song.code }}.jpg'/>
+    <img ng-repeat="song in songsPreLoad" ng-src='http://pcpjmjd9l.bkt.clouddn.com/{{ song.code }}.jpg'/>
 </div>
 <div style="width:100%;margin: 10% auto;text-align: center">
     <span>建议使用横屏</span>
@@ -321,7 +321,7 @@
 <script type="text/ng-template" id="modal.html">
     <div>
         <div class="img-pop-div" ng-class="data | notEmpty">
-            <img ng-src='e5img/{{ song.code }}.jpg' class="img-pop"/>
+            <img ng-src='http://pcpjmjd9l.bkt.clouddn.com/{{ song.code }}.jpg' class="img-pop"/>
             <div class="edit-song" ng-show="song.edit"  ng-form="editForm">
                 <div class="btn-group-vertical" style="position:relative;top:20%;opacity:0.8;z-index: 999">
                     <p class="btn btn-default">
