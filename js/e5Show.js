@@ -125,7 +125,7 @@ app.controller('modalCtrl', function($scope, $http, $uibModalInstance, data) {
     };
     $scope.addUrl = function() {
         editor=$scope.editor;
-        var url = "https://l8650tv3.qcloud.la/weapp/songs/addUrl";
+        var url = "https://740670558.e5cm.xyz/weapp/songs/addUrl";
         var ajax = new ajaxClass($http,url,"POST");
         var dataUrl = data.editType == 0?data.music_url:data.video_url
         // 传递表单数据的时候要使用$.param不然服务器没法正常捕获到发送的数据
